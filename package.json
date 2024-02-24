@@ -1,0 +1,24 @@
+{
+  "name": "cypher-note",
+  "version": "1.0.0",
+  "description": "word-scrambler-descrambler.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pralad-p/cypher-note.git"
+  },
+  "keywords": [
+    "words",
+    "encryption",
+    "decryption"
+  ],
+  "author": "Pralad Prasad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pralad-p/cypher-note/issues"
+  },
+  "homepage": "https://github.com/pralad-p/cypher-note#readme"
+}
