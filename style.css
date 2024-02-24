@@ -157,6 +157,11 @@ label {
   transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
+#session-status {
+  margin-top: 80px;
+  font-size: smaller;
+}
+
 #decrypt-button:hover {
   background-color: #555;
 }
