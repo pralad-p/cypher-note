@@ -10,6 +10,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const wholeWordCheckbox = document.getElementById("whole-word");
   let usedColors = ["#333"]; // Array to track used colors
 
+  // Global object to store selection-to-noun mappings
+  let selectionToNounMap = {};
+
+  async function fetchRandomNoun() {
+    let uniqueWord = "";
+    do {
+      const response = await fetch(
+        `https://random-word-form.herokuapp.com/random/noun`
+      );
+      const words = await response.json();
+      uniqueWord = words[0]; // API returns a single noun
+    } while (Object.values(selectionToNounMap).includes(uniqueWord));
+    return uniqueWord;
+  }
 
   function getRandomColor() {
     // Function to generate random color, making sure it's not too close to the text area bg
@@ -22,16 +36,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function escapeRegExp(text) {
-    return text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
   }
 
-  function markText(selectedText) {
+  async function markText(selectedText) {
     // Directly query the checkbox states here
     const isCaseSensitive = document.getElementById("case-sensitive").checked;
     const isWholeWord = document.getElementById("whole-word").checked;
 
-    console.log('Case sensitive checked:', isCaseSensitive);
-    console.log('Whole word checked:', isWholeWord);
+    console.log("Case sensitive checked:", isCaseSensitive);
+    console.log("Whole word checked:", isWholeWord);
 
     let content = textArea.innerHTML;
     const randomColor = getRandomColor();
@@ -40,16 +54,22 @@ document.addEventListener("DOMContentLoaded", () => {
     let regexString = escapedSelectedText;
 
     if (wholeWordCheckbox.checked) {
-        // If whole word checkbox is checked, use word boundaries in the regex
-        regexString = `\\b${escapedSelectedText}\\b`;
-      }
+      // If whole word checkbox is checked, use word boundaries in the regex
+      regexString = `\\b${escapedSelectedText}\\b`;
+    }
     // Use a regex to replace text
     const regex = new RegExp(regexString, flags);
+    const singular_match = content.match(regex);
+    if (singular_match) {
+      const noun = await fetchRandomNoun();
+      selectionToNounMap[singular_match] = noun;
+    }
     content = content.replace(regex, (match) => {
-        // Use the actual matched text, which preserves the case
-        return `<span style="background-color: ${randomColor};">${match}</span>`;
+      // Use the actual matched text, which preserves the case
+      return `<span style="background-color: ${randomColor};">${match}</span>`;
     });
     textArea.innerHTML = content;
+    console.log("SelectionToNounMap: ", selectionToNounMap);
   }
 
   textArea.addEventListener("mousedown", (event) => {
@@ -89,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "$1"
       );
       usedColors = ["#333"];
+      selectionToNounMap = {};
     }
 
     lastRightClickTimestamp = currentTime;
@@ -108,11 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  [caseSensitiveCheckbox, wholeWordCheckbox].forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
+  [caseSensitiveCheckbox, wholeWordCheckbox].forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
       // Logic that should run when checkbox state changes, if any
       console.log(`${checkbox.id} changed: `, checkbox.checked);
     });
   });
-
 });
