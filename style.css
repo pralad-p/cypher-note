@@ -1,114 +1,162 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-body, textarea {
-    margin: 0;
-    padding: 0;
-    font-family: 'Helvetica', sans-serif;
-    font-size: large;
-    color: #DDD;
-    background-color: #333;
-}
-
-#container {
-    display: flex;
-    height: 100vh;
-}
-
-#sidebar {
-    width: 170px;
-    background-color: #222;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-#main-content {
-    flex-grow: 1;
-    overflow: hidden;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica", sans-serif;
+  font-size: large;
+  color: #ddd;
+  background-color: #333;
 }
 
 #editable-area {
-    width: 100%;
-    height: 100%;
-    background-color: #444;
-    border: none;
-    padding: 30px;
-    color: #DDD;
-    resize: none; /* Prevent resizing */
-    outline: none; /* Remove the focus outline */
+  margin: 0;
+  padding: 0;
+  display: block;
+  font-family: "Helvetica", sans-serif;
+  font-size: large;
+  color: #ddd;
+  background-color: #333;
+}
+
+#container {
+  display: flex;
+  height: 100vh;
+}
+
+#sidebar {
+  width: 170px;
+  background-color: #222;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-content {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+#editable-area {
+  width: 100%;
+  height: 100%;
+  background-color: #444;
+  border: none;
+  padding: 30px;
+  color: #ddd;
+  resize: none; /* Prevent resizing */
+  outline: none; /* Remove the focus outline */
 }
 
 .sidebar-content {
-    display: flex;
-    flex-direction: column;
-    gap: 60px; /* Adds space between form elements */
-    margin-bottom: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* Adds space between form elements */
+  margin-bottom: auto;
 }
 
 #selected-text {
-    background-color: #555; /* Slightly lighter than the sidebar for contrast */
-    color: #DDD;
-    border: 1px solid #777;
-    width: 100%; /* Full width */
-    margin-right: 10px; /* Adjust this value as needed to create space on the right */
-    margin-bottom: 50px;
-    padding: 10px; /* Or adjust padding as needed */
-    font-size: small;
-}
-
-/* Add styles for .checkbox-container */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px; /* Add some space between checkboxes */
-}
-
-/* Styles for the custom checkbox */
-.checkbox-custom {
-    min-width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    border: 1px solid #DDD;
-    background-color: #333;
-    border-radius: 3px;
-    display: inline-block;
-    cursor: pointer;
-}
-
-/* Visual representation of a checked custom checkbox */
-.checkbox-custom.checked {
-    background: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 18 18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M7 14L3 10l1.4-1.4 2.6 2.6L14.6 4 16 5.4l-9 9z"/></svg>') no-repeat center center;
-    background-size: 16px; /* Size of the checkmark */
+  background-color: #555; /* Slightly lighter than the sidebar for contrast */
+  color: #ddd;
+  border: 1px solid #777;
+  width: 100%; /* Full width */
+  margin-right: 10px; /* Adjust this value as needed to create space on the right */
+  margin-bottom: 50px;
+  padding: 10px; /* Or adjust padding as needed */
+  font-size: small;
 }
 
 /* Add some margin to the right of the selected-text input to prevent cutting into the sidebar */
 #selected-text {
-    padding-right: 10px; /* Adjust as needed */
-}
-
-/* Adjust the actual checkboxes */
-#case-sensitive, #whole-word {
-    display: none; /* Hide the actual checkboxes */
+  padding-right: 10px; /* Adjust as needed */
 }
 
 /* Add some padding to the labels */
 label {
-    padding-left: 5px; /* Add padding to the left of the label */
-    user-select: none; /* Prevent text selection */
+  padding-left: 5px; /* Add padding to the left of the label */
+  margin-right: 10px;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Add styles for .checkbox-container */
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 #decrypt-button {
-    background-color: #444;
-    color: #FFF;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px; /* Add space above the button */
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  background-color: #444;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px; /* Add space above the button */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
 }
 
 #decrypt-button:hover {
-    background-color: #555;
+  background-color: #555;
 }

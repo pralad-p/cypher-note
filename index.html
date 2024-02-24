@@ -14,28 +14,31 @@
             <label for="selected-text">Selected text:</label>
             <input type="text" id="selected-text" readonly />
 
-            <div class="checkbox-container">
-              <div class="checkbox-custom"></div>
-              <label for="case-sensitive">Case-sensitive</label>
+            <label class="checkbox-container" for="case-sensitive"
+              >Case-sensitive
               <input type="checkbox" id="case-sensitive" />
-            </div>
+              <span class="checkmark"></span>
+            </label>
 
-            <div class="checkbox-container">
-              <div class="checkbox-custom"></div>
-              <label for="whole-word">Whole word</label>
+            <label class="checkbox-container" for="whole-word"
+              >Whole word
               <input type="checkbox" id="whole-word" />
-            </div>
+              <span class="checkmark"></span>
+            </label>
+
+            <div id="session-status">🟢 Session Ready!</div>
           </div>
 
           <button id="decrypt-button">Decrypt</button>
         </div>
       </aside>
       <main id="main-content">
-        <textarea
+        <div
           id="editable-area"
+          contenteditable="true"
           placeholder="Type some text here..."
           spellcheck="false"
-        ></textarea>
+        ></div>
       </main>
     </div>
     <script src="scripts.js"></script>
