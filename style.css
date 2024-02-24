@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+}
+
+body, textarea {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica', sans-serif;
+    font-size: large;
+    color: #DDD;
+    background-color: #333;
+}
+
+#container {
+    display: flex;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 170px;
+    background-color: #222;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#main-content {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#editable-area {
+    width: 100%;
+    height: 100%;
+    background-color: #444;
+    border: none;
+    padding: 30px;
+    color: #DDD;
+    resize: none; /* Prevent resizing */
+    outline: none; /* Remove the focus outline */
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    gap: 60px; /* Adds space between form elements */
+    margin-bottom: auto;
+}
+
+#selected-text {
+    background-color: #555; /* Slightly lighter than the sidebar for contrast */
+    color: #DDD;
+    border: 1px solid #777;
+    width: 100%; /* Full width */
+    margin-right: 10px; /* Adjust this value as needed to create space on the right */
+    margin-bottom: 50px;
+    padding: 10px; /* Or adjust padding as needed */
+    font-size: small;
+}
+
+/* Add styles for .checkbox-container */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Add some space between checkboxes */
+}
+
+/* Styles for the custom checkbox */
+.checkbox-custom {
+    min-width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #DDD;
+    background-color: #333;
+    border-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Visual representation of a checked custom checkbox */
+.checkbox-custom.checked {
+    background: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 18 18" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M7 14L3 10l1.4-1.4 2.6 2.6L14.6 4 16 5.4l-9 9z"/></svg>') no-repeat center center;
+    background-size: 16px; /* Size of the checkmark */
+}
+
+/* Add some margin to the right of the selected-text input to prevent cutting into the sidebar */
+#selected-text {
+    padding-right: 10px; /* Adjust as needed */
+}
+
+/* Adjust the actual checkboxes */
+#case-sensitive, #whole-word {
+    display: none; /* Hide the actual checkboxes */
+}
+
+/* Add some padding to the labels */
+label {
+    padding-left: 5px; /* Add padding to the left of the label */
+    user-select: none; /* Prevent text selection */
+}
+
+#decrypt-button {
+    background-color: #444;
+    color: #FFF;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px; /* Add space above the button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+#decrypt-button:hover {
+    background-color: #555;
+}

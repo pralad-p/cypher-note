@@ -1,1 +1,43 @@
-<h1>Hello World!</h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Electron App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="container">
+      <aside id="sidebar">
+        <div class="sidebar-content">
+          <div id="checkboxes-output-container">
+            <label for="selected-text">Selected text:</label>
+            <input type="text" id="selected-text" readonly />
+
+            <div class="checkbox-container">
+              <div class="checkbox-custom"></div>
+              <label for="case-sensitive">Case-sensitive</label>
+              <input type="checkbox" id="case-sensitive" />
+            </div>
+
+            <div class="checkbox-container">
+              <div class="checkbox-custom"></div>
+              <label for="whole-word">Whole word</label>
+              <input type="checkbox" id="whole-word" />
+            </div>
+          </div>
+
+          <button id="decrypt-button">Decrypt</button>
+        </div>
+      </aside>
+      <main id="main-content">
+        <textarea
+          id="editable-area"
+          placeholder="Type some text here..."
+          spellcheck="false"
+        ></textarea>
+      </main>
+    </div>
+    <script src="scripts.js"></script>
+  </body>
+</html>

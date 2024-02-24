@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "word-scrambler-descrambler.",
   "main": "main.js",
-  "type": "module",
   "scripts": {
     "start": "electron ."
   },
@@ -24,6 +23,7 @@
   "homepage": "https://github.com/pralad-p/cypher-note#readme",
   "devDependencies": {
     "electron": "^29.0.1",
+    "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^8.57.0"
   }
 }
