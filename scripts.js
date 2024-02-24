@@ -2,6 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const textArea = document.getElementById("editable-area");
+  const selectedTextDisplay = document.getElementById("selected-text");
 
   let lastRightClickTimestamp = 0; // To track double right-clicks
   let leftAndRightClicked = false;
@@ -12,6 +13,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Global object to store selection-to-noun mappings
   let selectionToNounMap = {};
+
+  /* Functions */
+  function updateSelectedText() {
+    const selection = window.getSelection().toString();
+    selectedTextDisplay.value = selection;
+    selectedTextDisplay.value = selectedTextDisplay.value.replace(/ /g,"*");
+  }
+
+  textArea.addEventListener("mouseup", updateSelectedText);
+  textArea.addEventListener("keyup", updateSelectedText);
+
 
   async function fetchRandomNoun() {
     let uniqueWord = "";

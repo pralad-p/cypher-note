@@ -64,6 +64,10 @@ body {
   color: #ddd;
   border: 1px solid #777;
   width: 100%; /* Full width */
+  height: auto;
+  border: none;
+  overflow: hidden;
+  resize: none;
   margin-right: 10px; /* Adjust this value as needed to create space on the right */
   margin-bottom: 50px;
   padding: 10px; /* Or adjust padding as needed */
