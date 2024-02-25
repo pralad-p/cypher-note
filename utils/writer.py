@@ -4,7 +4,7 @@ import os
 def write_contents_to_file(directory, filenames):
     # Path for the output file relative to the current file directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_file_path = os.path.join(script_dir,'..','artifacts', 'content.txt')
+    output_file_path = os.path.join(script_dir,'..', 'content.txt')
     output_file_path = os.path.normpath(output_file_path)
     
     with open(output_file_path, 'w') as output_file:
