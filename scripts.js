@@ -136,8 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Check if the last right-click was less than 500ms ago to consider it a double right-click
     if (currentTime - lastRightClickTimestamp < 500) {
       clearMarkings(textArea);
-      usedColors = ["#333"];
-      selectionToNounMap = {};
+      resetMarkingProps();
     }
 
     lastRightClickTimestamp = currentTime;
