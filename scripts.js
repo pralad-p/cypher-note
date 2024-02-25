@@ -1,29 +1,54 @@
 // scripts.js
 
+/* Global variables */
+let usedColors = ["#333"]; // Array to track used colors
+// Global object to store selection-to-noun mappings
+let selectionToNounMap = {};
+let lastRightClickTimestamp = 0; // To track double right-clicks
+let leftAndRightClicked = false;
+
+class StateManager {
+  constructor() {
+    this.flags = {
+      sessionRunning: false,
+      // Other flags can be added here
+    };
+  }
+
+  setFlag(flagKey, value) {
+    if (Object.prototype.hasOwnProperty.call(this.flags, flagKey)) {
+      this.flags[flagKey] = value;
+    }
+  }
+
+  getFlag(flagKey) {
+    return Object.prototype.hasOwnProperty.call(this.flags, flagKey)
+      ? this.flags[flagKey]
+      : undefined;
+  }
+}
+// Usage
+const stateManager = new StateManager();
+
 document.addEventListener("DOMContentLoaded", () => {
+  /* Global document variables */
   const textArea = document.getElementById("editable-area");
   const selectedTextDisplay = document.getElementById("selected-text");
-
-  let lastRightClickTimestamp = 0; // To track double right-clicks
-  let leftAndRightClicked = false;
-
+  const encryptButton = document.getElementById("encrypt-button");
+  const decryptButton = document.getElementById("decrypt-button");
   const caseSensitiveCheckbox = document.getElementById("case-sensitive");
   const wholeWordCheckbox = document.getElementById("whole-word");
-  let usedColors = ["#333"]; // Array to track used colors
-
-  // Global object to store selection-to-noun mappings
-  let selectionToNounMap = {};
+  const sessionStatusText = document.getElementById("session-status");
 
   /* Functions */
   function updateSelectedText() {
     const selection = window.getSelection().toString();
     selectedTextDisplay.value = selection;
-    selectedTextDisplay.value = selectedTextDisplay.value.replace(/ /g,"*");
+    selectedTextDisplay.value = selectedTextDisplay.value.replace(/ /g, "*");
   }
 
   textArea.addEventListener("mouseup", updateSelectedText);
   textArea.addEventListener("keyup", updateSelectedText);
-
 
   async function fetchRandomNoun() {
     let uniqueWord = "";
@@ -52,13 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function markText(selectedText) {
-    // Directly query the checkbox states here
-    const isCaseSensitive = document.getElementById("case-sensitive").checked;
-    const isWholeWord = document.getElementById("whole-word").checked;
-
-    console.log("Case sensitive checked:", isCaseSensitive);
-    console.log("Whole word checked:", isWholeWord);
-
     let content = textArea.innerHTML;
     const randomColor = getRandomColor();
     let flags = caseSensitiveCheckbox.checked ? "g" : "gi";
@@ -71,17 +89,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Use a regex to replace text
     const regex = new RegExp(regexString, flags);
-    const singular_match = content.match(regex);
-    if (singular_match) {
+    const singular_matches = content.match(regex);
+    if (singular_matches) {
       const noun = await fetchRandomNoun();
-      selectionToNounMap[singular_match] = noun;
+      for (const match of singular_matches) {
+        selectionToNounMap[match] = noun;
+      }
     }
     content = content.replace(regex, (match) => {
       // Use the actual matched text, which preserves the case
       return `<span style="background-color: ${randomColor};">${match}</span>`;
     });
     textArea.innerHTML = content;
-    console.log("SelectionToNounMap: ", selectionToNounMap);
   }
 
   textArea.addEventListener("mousedown", (event) => {
@@ -116,10 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check if the last right-click was less than 500ms ago to consider it a double right-click
     if (currentTime - lastRightClickTimestamp < 500) {
-      textArea.innerHTML = textArea.innerHTML.replace(
-        /<span style="background-color: [^>]+>([^<]+)<\/span>/g,
-        "$1"
-      );
+      clearMarkings(textArea);
       usedColors = ["#333"];
       selectionToNounMap = {};
     }
@@ -141,10 +157,73 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  [caseSensitiveCheckbox, wholeWordCheckbox].forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-      // Logic that should run when checkbox state changes, if any
-      console.log(`${checkbox.id} changed: `, checkbox.checked);
+  encryptButton.addEventListener("click", () => {
+    if (stateManager.getFlag("sessionRunning")) {
+      // session shouldn't be running
+      return;
+    }
+    let content = textArea.innerHTML;
+    // Iterate through each selection-to-noun mapping
+    Object.entries(selectionToNounMap).forEach(([key, noun]) => {
+      // Create a RegExp object for the key, ensuring case sensitivity
+      const regex = new RegExp(escapeRegExp(key), "g");
+
+      // Replace occurrences of the key with the noun
+      content = content.replace(regex, noun);
     });
+
+    // Update the text area with the modified content
+    textArea.innerHTML = content;
+    sessionStatusText.textContent = "🔴 Session running...";
+    stateManager.setFlag("sessionRunning", true);
+    clearMarkings(textArea);
+  });
+
+  decryptButton.addEventListener("click", () => {
+    if (!stateManager.getFlag("sessionRunning")) {
+      // session should be running
+      return;
+    }
+    let content = textArea.innerHTML;
+    // content = stripHTML(content);
+
+    let traversedWords = [];
+    // Iterate through each selection-to-noun mapping
+    Object.entries(selectionToNounMap).forEach(([key, noun]) => {
+      // Create a RegExp object for the noun (inverse), ensuring case sensitivity
+      if (traversedWords.includes(noun)) {
+        return;
+      }
+      const regex = new RegExp(escapeRegExp(noun), "gi");
+      // Replace occurrences of the noun with the key
+      content = content.replace(regex, key);
+      traversedWords.push(noun);
+    });
+
+    // Update the text area with the modified content
+    textArea.innerHTML = content;
+    sessionStatusText.textContent = "🟢 Session Ready!";
+    stateManager.setFlag("sessionRunning", false);
+    resetMarkingProps();
   });
 });
+
+function resetMarkingProps() {
+  usedColors = ["#333"];
+  selectionToNounMap = {};
+}
+
+function clearMarkings(textArea) {
+  textArea.innerHTML = textArea.innerHTML.replace(
+    /<span style="background-color: [^>]+>([^<]+)<\/span>/g,
+    "$1"
+  );
+
+}
+
+// Function to remove HTML tags from content
+// function stripHTML(html) {
+//   const tempDiv = document.createElement("div");
+//   tempDiv.innerHTML = html;
+//   return tempDiv.textContent || tempDiv.innerText || "";
+// }
