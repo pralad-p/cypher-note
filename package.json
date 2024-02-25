@@ -4,7 +4,7 @@
   "description": "word-scrambler-descrambler.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "set NODE_ENV=development && electron ."
   },
   "repository": {
     "type": "git",
