@@ -4,7 +4,8 @@
   "description": "word-scrambler-descrambler.",
   "main": "main.js",
   "scripts": {
-    "start": "set NODE_ENV=development && electron ."
+    "start": "electron .",
+    "build": "mkdir dist && cp index.html style.css scripts.js dist/"
   },
   "repository": {
     "type": "git",
