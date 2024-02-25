@@ -205,6 +205,10 @@ document.addEventListener("DOMContentLoaded", () => {
     stateManager.setFlag("sessionRunning", false);
     resetMarkingProps();
   });
+
+  textArea.addEventListener("input", function () {
+    console.log("Content of the div has changed!");
+  });
 });
 
 function resetMarkingProps() {
@@ -217,7 +221,6 @@ function clearMarkings(textArea) {
     /<span style="background-color: [^>]+>([^<]+)<\/span>/g,
     "$1"
   );
-
 }
 
 // Function to remove HTML tags from content
