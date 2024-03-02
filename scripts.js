@@ -31,11 +31,6 @@ class StateManager {
 const stateManager = new StateManager();
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Only call injectAnalytics if it's available
-  if (window.electronAPI && window.electronAPI.injectAnalytics) {
-    window.electronAPI.injectAnalytics();
-  }
-
   /* Global document variables */
   const textArea = document.getElementById("editable-area");
   const selectedTextDisplay = document.getElementById("selected-text");
