@@ -1,49 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer="" src="/_vercel/insights/script.js"></script>
-    <title>Cypher Note</title>
-    <link rel="stylesheet" href="./output.css" />
-  </head>
-  <body>
-    <div id="container">
-      <aside id="sidebar">
-        <div class="sidebar-content">
-          <div id="checkboxes-output-container">
-            <label for="selected-text">Selected text:</label>
-            <textarea type="text" id="selected-text" readonly></textarea>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script defer="" src="/_vercel/insights/script.js"></script>
+  <title>Cypher Note</title>
+  <link rel="stylesheet" href="./output.css" />  
+</head>
+<body class="bg-gray-800 text-gray-200 font-sans text-lg"> 
+  <div id="container" class="flex h-screen"> 
+    <aside id="sidebar" class="w-64 bg-gray-900 p-5 flex flex-col">
+      <div class="sidebar-content flex flex-col gap-10 mb-auto"> 
+        <div id="checkboxes-output-container">
+          <label for="selected-text" class="block mb-2">Selected text:</label>
+          <textarea type="text" id="selected-text" readonly class="bg-gray-700 text-gray-300 border border-gray-600 px-3 py-2 rounded-md"></textarea>
 
-            <label class="checkbox-container" for="case-sensitive"
-              >Case-sensitive
-              <input type="checkbox" id="case-sensitive" />
-              <span class="checkmark"></span>
-            </label>
+          <label class="flex items-center mt-3" for="case-sensitive"> 
+            <input type="checkbox" id="case-sensitive" class="mr-2 form-checkbox"> 
+            Case-sensitive
+          </label>
 
-            <label class="checkbox-container" for="whole-word"
-              >Whole word
-              <input type="checkbox" id="whole-word" />
-              <span class="checkmark"></span>
-            </label>
+          <label class="flex items-center mt-3" for="whole-word"> 
+            <input type="checkbox" id="whole-word" class="mr-2 form-checkbox"> 
+            Whole word 
+          </label>
 
-            <div id="session-status">🟢 Session Ready!</div>
-          </div>
+          <div id="session-status" class="text-green-500 mt-10 text-sm">🟢 Session Ready!</div>
+        </div> 
 
-          <button id="end-session-button">End Session</button>
-          <button id="encrypt-button">Encrypt</button>
-          <button id="decrypt-button">Decrypt</button>
-        </div>
-      </aside>
-      <main id="main-content">
-        <div
-          id="editable-area"
-          contenteditable="true"
-          placeholder="Type some text here..."
-          spellcheck="false"
-        ></div>
-      </main>
-    </div>
-    <script src="./scripts.js"></script>
-  </body>
+        <button id="end-session-button" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-white">End Session</button> 
+        <button id="encrypt-button" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-white">Encrypt</button> 
+        <button id="decrypt-button" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-white">Decrypt</button>
+      </div>
+    </aside>
+    <main id="main-content" class="flex-grow overflow-hidden">
+      <div id="editable-area" contenteditable="true" placeholder="Type some text here..." spellcheck="false" class="w-full h-full overflow-y-auto bg-gray-800 p-8 text-gray-200 focus:outline-none"></div>
+    </main>
+  </div>
+  <script src="./scripts.js"></script> 
+</body>
 </html>
