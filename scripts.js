@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectedTextDisplay = document.getElementById("selected-text");
   const encryptButton = document.getElementById("encrypt-button");
   const decryptButton = document.getElementById("decrypt-button");
+  const endSessionButton = document.getElementById("end-session-button");
   const caseSensitiveCheckbox = document.getElementById("case-sensitive");
   const wholeWordCheckbox = document.getElementById("whole-word");
   const sessionStatusText = document.getElementById("session-status");
@@ -146,10 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   encryptButton.addEventListener("click", () => {
-    if (stateManager.getFlag("sessionRunning")) {
-      // session shouldn't be running
-      return;
-    }
     let content = textArea.innerHTML;
     // Iterate through each selection-to-noun mapping
     Object.entries(selectionToNounMap).forEach(([key, noun]) => {
@@ -191,7 +188,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update the text area with the modified content
     textArea.innerHTML = content;
+  });
+
+  // End previous session (regardless if one was running)
+  endSessionButton.addEventListener("click", () => {
     sessionStatusText.textContent = "🟢 Session Ready!";
+    selectedTextDisplay.value = "";
+    textArea.innerHTML = "";
     stateManager.setFlag("sessionRunning", false);
     resetMarkingProps();
   });
