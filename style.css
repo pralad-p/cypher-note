@@ -153,6 +153,15 @@ label {
   transform: rotate(45deg);
 }
 
+#end-session-button {
+  background-color: #444;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
 #encrypt-button {
   background-color: #444;
   color: #fff;
@@ -174,6 +183,10 @@ label {
 #session-status {
   margin-top: 80px;
   font-size: smaller;
+}
+
+#end-session-button:hover {
+  background-color: #555;
 }
 
 #encrypt-button:hover {
