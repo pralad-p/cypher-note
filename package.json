@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "mkdir public && cp src/index.html src/style.css src/scripts.js public/"
+    "build": "mkdir public && cp src/index.html src/output.css src/scripts.js public/"
   },
   "repository": {
     "type": "git",
