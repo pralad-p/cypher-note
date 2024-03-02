@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `https://random-word-form.herokuapp.com/random/noun`
       );
       const words = await response.json();
-      uniqueWord = words[0]; // API returns a single noun
+      uniqueWord = capitializeWord(words[0]); // API returns a single noun
     } while (Object.values(selectionToNounMap).includes(uniqueWord));
     return uniqueWord;
   }
@@ -221,6 +221,13 @@ function clearMarkings(textArea) {
     /<span style="background-color: [^>]+>([^<]+)<\/span>/g,
     "$1"
   );
+}
+
+function capitializeWord(str) {
+  if (str.length === 0) {
+    throw new Error("Empty noun received.");
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Function to remove HTML tags from content
