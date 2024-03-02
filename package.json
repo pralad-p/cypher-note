@@ -29,6 +29,5 @@
     "eslint": "^8.57.0"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.2.2"
   }
 }
