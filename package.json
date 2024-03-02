@@ -4,7 +4,7 @@
   "description": "word-scrambler-descrambler.",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "cross-env NODE_ENV=development electron .",
     "build": "mkdir public && cp index.html style.css scripts.js public/"
   },
   "repository": {
@@ -23,8 +23,12 @@
   },
   "homepage": "https://github.com/pralad-p/cypher-note#readme",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "electron": "^29.0.1",
     "electron-reload": "^2.0.0-alpha.1",
     "eslint": "^8.57.0"
+  },
+  "dependencies": {
+    "@vercel/analytics": "^1.2.2"
   }
 }
