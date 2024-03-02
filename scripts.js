@@ -72,21 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
     return color;
   }
 
-  function escapeRegExp(text) {
-    return text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-  }
-
   async function markText(selectedText) {
     let content = textArea.innerHTML;
     const randomColor = getRandomColor();
-    let flags = caseSensitiveCheckbox.checked ? "g" : "gi";
-    let escapedSelectedText = escapeRegExp(selectedText);
-    let regexString = escapedSelectedText;
-
-    if (wholeWordCheckbox.checked) {
-      // If whole word checkbox is checked, use word boundaries in the regex
-      regexString = `\\b${escapedSelectedText}\\b`;
-    }
+    let { regexString, flags } = getRegexString(selectedText, caseSensitiveCheckbox, wholeWordCheckbox);
     // Use a regex to replace text
     const regex = new RegExp(regexString, flags);
     const singular_matches = content.match(regex);
@@ -164,8 +153,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let content = textArea.innerHTML;
     // Iterate through each selection-to-noun mapping
     Object.entries(selectionToNounMap).forEach(([key, noun]) => {
-      // Create a RegExp object for the key, ensuring case sensitivity
-      const regex = new RegExp(escapeRegExp(key), "g");
+      let { regexString, flags } = getRegexString(key, caseSensitiveCheckbox, wholeWordCheckbox);
+      // Use a regex to replace text
+      const regex = new RegExp(regexString, flags);
 
       // Replace occurrences of the key with the noun
       content = content.replace(regex, noun);
@@ -210,6 +200,22 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("Content of the div has changed!");
   });
 });
+
+function escapeRegExp(text) {
+  return text.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+}
+
+function getRegexString(text, caseSensitiveCheckbox, wholeWordCheckbox) {
+  let flags = caseSensitiveCheckbox.checked ? "g" : "gi";
+  let escapedText = escapeRegExp(text);
+  let regexString = escapedText;
+
+  if (wholeWordCheckbox.checked) {
+    // If whole word checkbox is checked, use word boundaries in the regex
+    regexString = `\\b${escapedText}\\b`;
+  }
+  return { regexString, flags };
+}
 
 function resetMarkingProps() {
   usedColors = ["#333"];
