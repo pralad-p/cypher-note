@@ -1,7 +1,7 @@
 // scripts.js
 
 /* Global variables */
-let usedColors = ["#333"]; // Array to track used colors
+let usedColors = ["#1F2937"]; // Array to track used colors
 // Global object to store selection-to-noun mappings
 let selectionToNounMap = {};
 let lastRightClickTimestamp = 0; // To track double right-clicks
@@ -240,7 +240,7 @@ function getRegexString(text, caseSensitiveCheckbox, wholeWordCheckbox) {
 }
 
 function resetMarkingProps() {
-  usedColors = ["#333"];
+  usedColors = ["#1F2937"];
   selectionToNounMap = {};
 }
 
