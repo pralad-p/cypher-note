@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer="" src="/_vercel/insights/script.js"></script>
+    <title>Cypher Note</title>
+    <link rel="stylesheet" href="./output.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-800 text-gray-200 font-sans text-lg">
+    <div id="container" class="flex h-screen">
+      <aside id="sidebar" class="w-64 bg-gray-900 p-5 flex flex-col">
+        <div class="sidebar-content flex flex-col gap-10 mb-auto">
+          <div id="checkboxes-output-container">
+            <label for="selected-text" class="block mb-2">Selected text:</label>
+            <textarea
+              type="text"
+              id="selected-text"
+              readonly
+              class="bg-gray-700 text-gray-300 border border-gray-600 px-3 py-2 rounded-md"
+            ></textarea>
+
+            <div class="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="case-sensitive"
+                class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="case-sensitive"
+                class="ms-2 text-base font-medium text-gray-900 dark:text-gray-300"
+                >Case-sensitive</label
+              >
+            </div>
+
+            <div class="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="whole-word"
+                class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label
+                for="whole-word"
+                class="ms-2 text-base font-medium text-gray-900 dark:text-gray-300"
+                >Whole word
+              </label>
+            </div>
+
+            <span
+              id="session-status"
+              class="flex items-center text-sm font-medium text-gray-900 dark:text-white me-3"
+            >
+              <span
+                class="flex w-3 h-3 me-3 bg-green-500 rounded-full border-solid flex-shrink-0"
+              ></span>
+              <span id="session-text">Session Ready!</span>
+            </span>
+          </div>
+
+          <button
+            id="end-session-button"
+            class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+          >
+            End Session
+          </button>
+          <button
+            id="encrypt-button"
+            class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          >
+            Encrypt
+          </button>
+          <button
+            id="decrypt-button"
+            class="text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+          >
+            Decrypt
+          </button>
+          <button
+            data-modal-target="default-modal"
+            data-modal-toggle="default-modal"
+            class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            type="button"
+          >
+            Help
+          </button>
+
+          <!-- Main modal -->
+          <div
+            id="default-modal"
+            tabindex="-1"
+            aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+          >
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+              <!-- Modal content -->
+              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div
+                  class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+                >
+                  <h3
+                    class="text-xl font-semibold text-gray-900 dark:text-white"
+                  >
+                    How to use
+                  </h3>
+                  <button
+                    type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="default-modal"
+                  >
+                    <svg
+                      class="w-3 h-3"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 14"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                      />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                  </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5 space-y-4">
+                  <li
+                    class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                  >
+                    Select the <strong>sensitive text</strong> to obscure.
+                  </li>
+                  <li
+                    class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                  >
+                    On the selected text, hit the left-🖱️ button and right-🖱️
+                    button together (or <strong>Ctrl-Space</strong>) to create a
+                    mapping. These are marked by color selections.
+                    Right-clicking the 🖱️ button twice resets the selections.
+                  </li>
+                  <li
+                    class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                  >
+                    Once all mappings are complete, hit
+                    <strong>Encrypt</strong> to map your prompt.
+                  </li>
+                  <li
+                    class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                  >
+                    Get your prompt response and paste it in the text area.
+                    Hitting <strong>Decrypt</strong> will return your response
+                    with the original remappings.
+                  </li>
+                  <li
+                    class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                  >
+                    You can continue multiple rounds of questioning with this
+                    workflow. If you want to start fresh, click the
+                    <strong>End Session</strong> button.
+                  </li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main id="main-content" class="flex-grow overflow-hidden">
+        <div
+          id="editable-area"
+          contenteditable="true"
+          placeholder="Type some text here..."
+          spellcheck="false"
+          class="w-full h-full overflow-y-auto bg-gray-800 p-8 text-gray-200 focus:outline-none"
+        ></div>
+      </main>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.js"
+      integrity="sha512-bUju8VkXhCQgW7zCHSdiIDpECo/lqzChkKrKoc1v2PL2XqO/0Q2Y8dhu07+q6Rk+1c1xr6cfE0VZnumgwy93Ig=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./scripts.js"></script>
+  </body>
+</html>

@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "mkdir public && cp index.html style.css scripts.js public/"
+    "build": "mkdir public && cp src/index.html src/output.css src/scripts.js public/"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,10 @@
   "devDependencies": {
     "electron": "^29.0.1",
     "electron-reload": "^2.0.0-alpha.1",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "flowbite": "^2.3.0"
   }
 }
