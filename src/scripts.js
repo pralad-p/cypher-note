@@ -132,6 +132,21 @@ document.addEventListener("DOMContentLoaded", () => {
     lastRightClickTimestamp = currentTime;
   });
 
+  // If LMouse + RMouse is too hard, use Ctrl+Space
+  textArea.addEventListener("keydown", (event) => {
+    // Check if Ctrl is pressed along with the Spacebar
+    if (event.ctrlKey && event.code === "Space") {
+        event.preventDefault(); // Prevent the default action of the spacebar
+
+        // Simulate the marking logic as if both mouse buttons were clicked
+        const selectedText = window.getSelection().toString();
+        if (selectedText) {
+            markText(selectedText);
+        }
+    }
+});
+  
+
   // Clear placeholder on focus
   textArea.addEventListener("focus", function () {
     if (this.value === this.getAttribute("placeholder")) {
