@@ -76,7 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
   async function markText(selectedText) {
     let content = textArea.innerHTML;
     const randomColor = getRandomColor();
-    let { regexString, flags } = getRegexString(selectedText, caseSensitiveCheckbox, wholeWordCheckbox);
+    let { regexString, flags } = getRegexString(
+      selectedText,
+      caseSensitiveCheckbox,
+      wholeWordCheckbox
+    );
     // Use a regex to replace text
     const regex = new RegExp(regexString, flags);
     const singular_matches = content.match(regex);
@@ -136,16 +140,15 @@ document.addEventListener("DOMContentLoaded", () => {
   textArea.addEventListener("keydown", (event) => {
     // Check if Ctrl is pressed along with the Spacebar
     if (event.ctrlKey && event.code === "Space") {
-        event.preventDefault(); // Prevent the default action of the spacebar
+      event.preventDefault(); // Prevent the default action of the spacebar
 
-        // Simulate the marking logic as if both mouse buttons were clicked
-        const selectedText = window.getSelection().toString();
-        if (selectedText) {
-            markText(selectedText);
-        }
+      // Simulate the marking logic as if both mouse buttons were clicked
+      const selectedText = window.getSelection().toString();
+      if (selectedText) {
+        markText(selectedText);
+      }
     }
-});
-  
+  });
 
   // Clear placeholder on focus
   textArea.addEventListener("focus", function () {
@@ -165,7 +168,11 @@ document.addEventListener("DOMContentLoaded", () => {
     let content = textArea.innerHTML;
     // Iterate through each selection-to-noun mapping
     Object.entries(selectionToNounMap).forEach(([key, noun]) => {
-      let { regexString, flags } = getRegexString(key, caseSensitiveCheckbox, wholeWordCheckbox);
+      let { regexString, flags } = getRegexString(
+        key,
+        caseSensitiveCheckbox,
+        wholeWordCheckbox
+      );
       // Use a regex to replace text
       const regex = new RegExp(regexString, flags);
 
@@ -176,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update the text area with the modified content
     textArea.innerHTML = content;
     const statusIndicator = document.querySelector("#session-status > span");
-    statusIndicator.classList.replace('bg-green-500', 'bg-red-500');
+    statusIndicator.classList.replace("bg-green-500", "bg-red-500");
     sessionStatusText.textContent = "Session running...";
     stateManager.setFlag("sessionRunning", true);
     clearMarkings(textArea);
@@ -210,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // End previous session (regardless if one was running)
   endSessionButton.addEventListener("click", () => {
     const statusIndicator = document.querySelector("#session-status > span");
-    statusIndicator.classList.replace('bg-red-500', 'bg-green-500');
+    statusIndicator.classList.replace("bg-red-500", "bg-green-500");
     sessionStatusText.textContent = "Session Ready!";
     selectedTextDisplay.value = "";
     textArea.innerHTML = "";
