@@ -1,3 +1,4 @@
+![Cypher Note logo](./local/logo.png)
 # cypher-note
 
 [Cypher Note](https://cypher-note.vercel.app/) is a desktop/web application built with Electron, specifically designed for obfuscated prompting with Language Learning Models (LLMs). It facilitates a secure interaction layer between users and LLMs by enabling the encryption of sensitive text within prompts. This ensures that extra context is not inadvertently passed on to the LLM, safeguarding user privacy. Additionally, Cypher Note provides the functionality to decrypt responses received from the LLM, allowing for a seamless, secure dialogue flow.
