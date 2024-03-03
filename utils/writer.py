@@ -7,14 +7,14 @@ def write_contents_to_file(directory, filenames):
     output_file_path = os.path.join(script_dir,'..', 'content.txt')
     output_file_path = os.path.normpath(output_file_path)
     
-    with open(output_file_path, 'w') as output_file:
+    with open(output_file_path, 'w', encoding='utf-8') as output_file:
         for filename in filenames:
             # Construct full path to the file
             file_path = os.path.join(directory, filename)
             
             try:
                 # Attempt to open and read the file
-                with open(file_path, 'r') as file:
+                with open(file_path, 'r', encoding='utf-8') as file:
                     content = file.read()
                     output_file.write("================\n")
                     output_file.write(f"//{filename}\n")
