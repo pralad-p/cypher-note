@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const endSessionButton = document.getElementById("end-session-button");
   const caseSensitiveCheckbox = document.getElementById("case-sensitive");
   const wholeWordCheckbox = document.getElementById("whole-word");
-  const sessionStatusText = document.getElementById("session-status");
+  const sessionStatusText = document.getElementById("session-text");
 
   /* Functions */
   function updateSelectedText() {
@@ -160,7 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Update the text area with the modified content
     textArea.innerHTML = content;
-    sessionStatusText.textContent = "🔴 Session running...";
+    const statusIndicator = document.querySelector("#session-status > span");
+    statusIndicator.classList.replace('bg-green-500', 'bg-red-500');
+    sessionStatusText.textContent = "Session running...";
     stateManager.setFlag("sessionRunning", true);
     clearMarkings(textArea);
   });
@@ -192,7 +194,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // End previous session (regardless if one was running)
   endSessionButton.addEventListener("click", () => {
-    sessionStatusText.textContent = "🟢 Session Ready!";
+    const statusIndicator = document.querySelector("#session-status > span");
+    statusIndicator.classList.replace('bg-red-500', 'bg-green-500');
+    sessionStatusText.textContent = "Session Ready!";
     selectedTextDisplay.value = "";
     textArea.innerHTML = "";
     stateManager.setFlag("sessionRunning", false);
