@@ -70,5 +70,5 @@ We welcome contributions! Feel free to submit pull requests or create issues for
 
 ## License
 
-Cypher Note is made available under the Eclipse Public License (2.0). See the LICENSE file for more details.
+Cypher Note is made available under the MIT License. See the LICENSE file for more details.
 
